@@ -144,7 +144,7 @@ smart-meal-recommendation-bot/
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/smart-meal-recommendation-bot.git
+git clone https://github.com/AnthonyBnc/smart-meal-recommendation-bot.git
 cd smart-meal-recommendation-bot
 ```
 
