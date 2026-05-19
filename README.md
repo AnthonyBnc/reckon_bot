@@ -1,5 +1,3 @@
-# reckon_bot
-Smart Meal Recommendation Bot Using Azure AI Vision and Speech Services
 # Smart Meal Recommendation Bot
 
 A multimodal recommendation bot built for **SIT788 Engineering AI Solutions - Task 11.2HD Option 2**.
