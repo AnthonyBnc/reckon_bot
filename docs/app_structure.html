@@ -1,0 +1,478 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Smart Meal Recommendation Bot - Codebase Guide</title>
+  <style>
+    :root {
+      --bg: #f7f8fb;
+      --panel: #ffffff;
+      --ink: #172033;
+      --muted: #617086;
+      --line: #d8deea;
+      --accent: #217a73;
+      --accent-soft: #e5f4f2;
+      --code: #101827;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--ink);
+      background: var(--bg);
+      line-height: 1.55;
+    }
+
+    header {
+      background: #16343f;
+      color: #ffffff;
+      padding: 42px 24px;
+    }
+
+    header .wrap,
+    main {
+      max-width: 1120px;
+      margin: 0 auto;
+    }
+
+    h1,
+    h2,
+    h3 {
+      margin: 0 0 12px;
+      line-height: 1.2;
+    }
+
+    h1 {
+      font-size: 34px;
+    }
+
+    h2 {
+      margin-top: 34px;
+      font-size: 24px;
+    }
+
+    h3 {
+      font-size: 18px;
+    }
+
+    p {
+      margin: 0 0 14px;
+    }
+
+    main {
+      padding: 28px 24px 56px;
+    }
+
+    .summary {
+      max-width: 760px;
+      color: #d9e9ec;
+      font-size: 17px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+    }
+
+    .card,
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 18px;
+      box-shadow: 0 8px 24px rgba(25, 40, 70, 0.05);
+    }
+
+    .card h3 {
+      color: var(--accent);
+    }
+
+    .tag {
+      display: inline-block;
+      margin: 2px 6px 2px 0;
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: bold;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    th,
+    td {
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      background: #edf2f7;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    tr:last-child td {
+      border-bottom: 0;
+    }
+
+    code,
+    pre {
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+    }
+
+    code {
+      color: var(--code);
+      background: #eef1f6;
+      padding: 2px 5px;
+      border-radius: 4px;
+    }
+
+    pre {
+      margin: 0;
+      padding: 16px;
+      overflow-x: auto;
+      color: #f5f7fb;
+      background: var(--code);
+      border-radius: 8px;
+    }
+
+    .flow {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(130px, 1fr));
+      gap: 10px;
+      align-items: stretch;
+    }
+
+    .step {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 12px;
+      background: #ffffff;
+      min-height: 96px;
+    }
+
+    .step strong {
+      display: block;
+      color: var(--accent);
+      margin-bottom: 6px;
+    }
+
+    .note {
+      border-left: 4px solid var(--accent);
+      background: var(--accent-soft);
+      padding: 14px 16px;
+      border-radius: 6px;
+    }
+
+    @media (max-width: 820px) {
+      .flow {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <h1>Smart Meal Recommendation Bot - Codebase Guide</h1>
+      <p class="summary">
+        This page explains the full app structure in one place so a teammate can read it first,
+        understand the flow, and then open the right file when they need to change something.
+      </p>
+    </div>
+  </header>
+
+  <main>
+    <section class="panel">
+      <h2>Project Purpose</h2>
+      <p>
+        The app is a Streamlit meal recommendation bot for SIT788 Option 2. It accepts typed
+        preferences, an uploaded food or ingredient image, and a short voice preference. It uses
+        Azure AI Vision for image understanding, Azure Speech to Text for voice transcription,
+        and a local CSV recipe dataset for recommendation scoring.
+      </p>
+      <span class="tag">Text input</span>
+      <span class="tag">Image input</span>
+      <span class="tag">Voice input</span>
+      <span class="tag">Azure AI Vision</span>
+      <span class="tag">Azure Speech</span>
+      <span class="tag">Local recipe CSV</span>
+    </section>
+
+    <h2>Folder Structure</h2>
+    <pre><code>reckon_bot/
+├── app.py
+├── requirements.txt
+├── README.md
+├── .env.example
+├── components/
+│   ├── input_section.py
+│   ├── results.py
+│   └── sidebar.py
+├── config/
+│   └── settings.py
+├── data/
+│   └── recipes.csv
+├── docs/
+│   ├── app_structure.html
+│   ├── architecture_flowchart_mermaid.md
+│   └── report_structure.md
+└── services/
+    ├── azure_speech.py
+    ├── azure_vision.py
+    ├── data_loader.py
+    ├── recommender.py
+    └── text_processing.py</code></pre>
+
+    <h2>How The App Runs</h2>
+    <div class="flow">
+      <div class="step">
+        <strong>1. app.py</strong>
+        Starts Streamlit, loads config status, renders sidebar, and loads recipes.
+      </div>
+      <div class="step">
+        <strong>2. Components</strong>
+        Draw text input, image upload, voice input, combined profile, and recommendations.
+      </div>
+      <div class="step">
+        <strong>3. Azure Services</strong>
+        Analyse the uploaded image and transcribe recorded speech when credentials exist.
+      </div>
+      <div class="step">
+        <strong>4. Search Profile</strong>
+        Combine typed text, image caption, visual keywords, OCR text, and voice transcript.
+      </div>
+      <div class="step">
+        <strong>5. Recommender</strong>
+        Tokenize the search profile, score recipes, and show ranked meal matches.
+      </div>
+    </div>
+
+    <h2>Main Files</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>File</th>
+          <th>What It Does</th>
+          <th>When To Edit It</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>app.py</code></td>
+          <td>Main Streamlit controller. It connects UI components, Azure service calls, recipe loading, and recommendation output.</td>
+          <td>Edit when changing the overall page flow, layout columns, or how inputs are combined.</td>
+        </tr>
+        <tr>
+          <td><code>requirements.txt</code></td>
+          <td>Lists Python dependencies such as Streamlit, pandas, dotenv, Azure Vision, Azure Speech, and Pillow.</td>
+          <td>Edit when adding or removing Python libraries.</td>
+        </tr>
+        <tr>
+          <td><code>.env.example</code></td>
+          <td>Shows which Azure environment variables are needed without exposing real keys.</td>
+          <td>Edit when adding a new secret or cloud service setting.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>Components</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>File</th>
+          <th>Functions</th>
+          <th>Responsibility</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>components/input_section.py</code></td>
+          <td><code>render_text_input</code>, <code>render_image_input</code>, <code>render_voice_input</code></td>
+          <td>Builds the three user input areas: typed preference, image upload, and voice recording or WAV upload fallback.</td>
+        </tr>
+        <tr>
+          <td><code>components/sidebar.py</code></td>
+          <td><code>render_sidebar</code></td>
+          <td>Shows system status, including whether the local dataset is ready and whether Azure Vision and Speech credentials are configured.</td>
+        </tr>
+        <tr>
+          <td><code>components/results.py</code></td>
+          <td><code>render_combined_text</code>, <code>render_recommendations</code></td>
+          <td>Shows the combined search profile and the ranked recipe recommendations with score, ingredients, tags, and matched terms.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>Config</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>File</th>
+          <th>Functions</th>
+          <th>Responsibility</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>config/settings.py</code></td>
+          <td><code>get_config_status</code>, <code>get_required_env</code>, <code>AzureConfigStatus</code></td>
+          <td>Loads the <code>.env</code> file, checks Azure credentials, and gives the app a simple ready or missing status.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>Services</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>File</th>
+          <th>Functions</th>
+          <th>Responsibility</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>services/azure_vision.py</code></td>
+          <td><code>analyse_image</code></td>
+          <td>Calls Azure AI Vision to extract image caption, tags, detected objects, and OCR text from the uploaded image.</td>
+        </tr>
+        <tr>
+          <td><code>services/azure_speech.py</code></td>
+          <td><code>transcribe_audio</code></td>
+          <td>Saves the recorded audio temporarily, sends it to Azure Speech to Text, and returns the transcript.</td>
+        </tr>
+        <tr>
+          <td><code>services/data_loader.py</code></td>
+          <td><code>load_recipes</code></td>
+          <td>Loads <code>data/recipes.csv</code>, validates required columns, and caches the dataset for Streamlit.</td>
+        </tr>
+        <tr>
+          <td><code>services/text_processing.py</code></td>
+          <td><code>tokenize</code></td>
+          <td>Cleans text into useful keywords by lowercasing, removing small words, and ignoring common stop words.</td>
+        </tr>
+        <tr>
+          <td><code>services/recommender.py</code></td>
+          <td><code>recommend_recipes</code></td>
+          <td>Scores each recipe by matching query keywords against recipe name, ingredients, tags, cuisine, and meal type.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>Dataset</h2>
+    <div class="panel">
+      <p>
+        The local recipe data lives in <code>data/recipes.csv</code>. Each recipe must include these columns:
+      </p>
+      <pre><code>name,cuisine,ingredients,tags,prep_time,meal_type</code></pre>
+      <p>
+        The recommender uses these fields for scoring. For example, a user search profile containing
+        <code>quick high protein chicken rice dinner</code> strongly matches recipes that include those
+        words in ingredients and tags.
+      </p>
+    </div>
+
+    <h2>Recommendation Scoring</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Recipe Field</th>
+          <th>Weight</th>
+          <th>Why</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>name</code></td>
+          <td>4</td>
+          <td>The recipe name is highly important because it usually contains the core meal.</td>
+        </tr>
+        <tr>
+          <td><code>ingredients</code></td>
+          <td>3</td>
+          <td>Ingredients directly match what the user has or wants.</td>
+        </tr>
+        <tr>
+          <td><code>tags</code></td>
+          <td>3</td>
+          <td>Tags capture preferences such as healthy, quick, vegan, spicy, or high protein.</td>
+        </tr>
+        <tr>
+          <td><code>cuisine</code></td>
+          <td>2</td>
+          <td>Cuisine helps when the user asks for Italian, Indian, Thai, and similar terms.</td>
+        </tr>
+        <tr>
+          <td><code>meal_type</code></td>
+          <td>2</td>
+          <td>Meal type helps match breakfast, lunch, or dinner requests.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>Data Flow In Plain English</h2>
+    <ol>
+      <li>The user types a preference, uploads an image, and records or uploads audio.</li>
+      <li><code>app.py</code> sends the image bytes to <code>analyse_image</code>.</li>
+      <li><code>app.py</code> sends the audio bytes to <code>transcribe_audio</code>.</li>
+      <li>The app combines typed text, image caption, image keywords, OCR text, and voice transcript.</li>
+      <li><code>recommend_recipes</code> tokenizes that combined text and compares it with each recipe.</li>
+      <li>The highest scoring recipes are displayed with matched terms so the result is explainable.</li>
+    </ol>
+
+    <h2>Where To Change Things</h2>
+    <div class="grid">
+      <div class="card">
+        <h3>Change UI wording</h3>
+        <p>Edit <code>components/input_section.py</code>, <code>components/results.py</code>, or <code>components/sidebar.py</code>.</p>
+      </div>
+      <div class="card">
+        <h3>Add more recipes</h3>
+        <p>Edit <code>data/recipes.csv</code> and keep the same column names.</p>
+      </div>
+      <div class="card">
+        <h3>Change scoring rules</h3>
+        <p>Edit <code>FIELD_WEIGHTS</code> or matching logic in <code>services/recommender.py</code>.</p>
+      </div>
+      <div class="card">
+        <h3>Change text cleanup</h3>
+        <p>Edit stop words or token rules in <code>services/text_processing.py</code>.</p>
+      </div>
+      <div class="card">
+        <h3>Change Azure Vision behavior</h3>
+        <p>Edit visual features or result parsing in <code>services/azure_vision.py</code>.</p>
+      </div>
+      <div class="card">
+        <h3>Change Azure Speech behavior</h3>
+        <p>Edit language, temp audio handling, or result handling in <code>services/azure_speech.py</code>.</p>
+      </div>
+    </div>
+
+    <h2>Setup Reminder</h2>
+    <div class="note">
+      <p>
+        Copy <code>.env.example</code> to <code>.env</code>, add Azure keys, install dependencies with
+        <code>pip install -r requirements.txt</code>, then run <code>streamlit run app.py</code>.
+      </p>
+    </div>
+  </main>
+</body>
+</html>

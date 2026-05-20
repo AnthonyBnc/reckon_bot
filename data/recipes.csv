@@ -1,0 +1,41 @@
+name,cuisine,ingredients,tags,prep_time,meal_type
+Chicken Rice Power Bowl,Asian,"chicken, brown rice, broccoli, soy sauce, sesame, egg","high protein, healthy, quick, dinner",25,dinner
+Vegetable Lentil Soup,Mediterranean,"lentils, carrot, celery, tomato, spinach, onion","vegetarian, vegan, healthy, warm, budget",35,dinner
+Tuna Avocado Salad,Australian,"tuna, avocado, lettuce, cucumber, tomato, lemon","low carb, high protein, quick, fresh",12,lunch
+Egg Fried Rice,Chinese,"egg, rice, peas, carrot, soy sauce, spring onion","quick, budget, comfort, dinner",18,dinner
+Chickpea Curry,Indian,"chickpeas, tomato, coconut milk, spinach, curry powder, rice","vegetarian, vegan, spicy, high fibre",30,dinner
+Greek Yogurt Breakfast Bowl,Greek,"greek yogurt, berries, banana, oats, honey, almonds","breakfast, healthy, sweet, high protein",8,breakfast
+Salmon Quinoa Plate,Modern Australian,"salmon, quinoa, asparagus, lemon, olive oil","omega 3, high protein, healthy, dinner",28,dinner
+Tomato Basil Pasta,Italian,"pasta, tomato, basil, garlic, olive oil, parmesan","vegetarian, comfort, quick, dinner",22,dinner
+Beef Taco Bowl,Mexican,"beef mince, rice, beans, corn, salsa, lettuce","high protein, spicy, dinner, meal prep",30,dinner
+Tofu Stir Fry,Asian,"tofu, noodles, capsicum, broccoli, ginger, soy sauce","vegetarian, vegan, quick, high protein",20,dinner
+Prawn Rice Noodle Salad,Thai,"prawns, rice noodles, cucumber, carrot, mint, lime","fresh, light, seafood, lunch",20,lunch
+Peanut Butter Banana Smoothie,American,"banana, peanut butter, milk, oats, chia seeds","breakfast, sweet, quick, energy",5,breakfast
+Chicken Caesar Wrap,Western,"chicken, tortilla, lettuce, parmesan, caesar dressing, tomato","high protein, quick, lunch, comfort",15,lunch
+Mushroom Risotto,Italian,"arborio rice, mushroom, parmesan, onion, garlic, vegetable stock","vegetarian, comfort, warm, dinner",40,dinner
+Turkey Sweet Potato Bowl,American,"turkey mince, sweet potato, spinach, avocado, corn","high protein, healthy, meal prep, dinner",35,dinner
+Vietnamese Chicken Pho,Vietnamese,"chicken, rice noodles, bean sprouts, herbs, lime, onion","warm, comfort, high protein, soup",45,dinner
+Beef Pho,Vietnamese,"beef, rice noodles, onion, bean sprouts, basil, lime","warm, comfort, high protein, soup",50,dinner
+Banana Oat Pancakes,Australian,"banana, oats, egg, milk, cinnamon, honey","breakfast, sweet, healthy, quick",15,breakfast
+Chicken Pesto Pasta,Italian,"chicken, pasta, pesto, spinach, parmesan, cherry tomato","high protein, comfort, dinner",25,dinner
+Vegetable Omelette,Western,"egg, spinach, mushroom, tomato, cheese, capsicum","breakfast, low carb, high protein, quick",10,breakfast
+Sushi Tuna Bowl,Japanese,"tuna, rice, cucumber, avocado, seaweed, soy sauce","fresh, high protein, lunch, seafood",18,lunch
+Teriyaki Chicken Bowl,Japanese,"chicken, rice, broccoli, carrot, teriyaki sauce, sesame","high protein, quick, dinner, meal prep",25,dinner
+Pumpkin Soup,Australian,"pumpkin, onion, garlic, vegetable stock, cream, bread","vegetarian, warm, comfort, budget",35,dinner
+Chicken Burrito Bowl,Mexican,"chicken, rice, black beans, corn, salsa, avocado","high protein, spicy, dinner, meal prep",30,dinner
+Halloumi Couscous Salad,Mediterranean,"halloumi, couscous, cucumber, tomato, lemon, parsley","vegetarian, fresh, lunch, quick",18,lunch
+Thai Green Curry Chicken,Thai,"chicken, coconut milk, green curry paste, beans, bamboo shoots, rice","spicy, warm, high protein, dinner",35,dinner
+Vegan Buddha Bowl,Fusion,"quinoa, chickpeas, avocado, spinach, carrot, tahini","vegan, vegetarian, healthy, lunch",25,lunch
+Spaghetti Bolognese,Italian,"beef mince, pasta, tomato, garlic, onion, parmesan","comfort, dinner, high protein",35,dinner
+Chicken Schnitzel Salad,Australian,"chicken, breadcrumbs, lettuce, tomato, cucumber, lemon","high protein, lunch, comfort",25,lunch
+Miso Salmon Bowl,Japanese,"salmon, rice, miso paste, cucumber, edamame, sesame","healthy, omega 3, high protein, dinner",30,dinner
+Black Bean Quesadilla,Mexican,"black beans, tortilla, cheese, corn, salsa, capsicum","vegetarian, quick, budget, lunch",15,lunch
+Berry Protein Smoothie,Australian,"berries, protein powder, milk, banana, oats, chia seeds","breakfast, high protein, sweet, quick",5,breakfast
+Garlic Butter Prawns,Seafood,"prawns, garlic, butter, lemon, parsley, rice","seafood, high protein, quick, dinner",18,dinner
+Chicken Udon Noodles,Japanese,"chicken, udon noodles, soy sauce, mushroom, spring onion, egg","comfort, high protein, dinner",25,dinner
+Roast Vegetable Couscous,Mediterranean,"couscous, zucchini, capsicum, eggplant, chickpeas, feta","vegetarian, healthy, lunch, meal prep",30,lunch
+Avocado Egg Toast,Western,"bread, avocado, egg, tomato, lemon, pepper","breakfast, healthy, quick, high protein",10,breakfast
+Korean Beef Rice Bowl,Korean,"beef mince, rice, cucumber, carrot, soy sauce, sesame oil","high protein, quick, dinner",22,dinner
+Kimchi Fried Rice,Korean,"rice, kimchi, egg, spring onion, sesame oil, soy sauce","spicy, quick, comfort, dinner",18,dinner
+Chicken Laksa,Malaysian,"chicken, noodles, coconut milk, laksa paste, bean sprouts, coriander","spicy, warm, comfort, high protein",35,dinner
+Mediterranean Tuna Pasta,Mediterranean,"tuna, pasta, tomato, olives, spinach, garlic","seafood, high protein, quick, dinner",22,dinner
