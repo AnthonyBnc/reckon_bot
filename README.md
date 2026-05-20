@@ -148,6 +148,7 @@ smart-meal-recommendation-bot/
 │   └── text_processing.py
 │
 └── docs/
+    ├── app_structure.html
     ├── architecture_flowchart_mermaid.md
     └── report_structure.md
 ```
