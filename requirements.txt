@@ -1,0 +1,7 @@
+streamlit
+pandas
+python-dotenv
+azure-ai-vision-imageanalysis
+azure-core
+azure-cognitiveservices-speech
+Pillow

@@ -1,0 +1,13 @@
+name,cuisine,ingredients,tags,prep_time,meal_type
+Chicken Rice Power Bowl,Asian,"chicken, brown rice, broccoli, soy sauce, sesame, egg","high protein, healthy, quick, dinner",25,dinner
+Vegetable Lentil Soup,Mediterranean,"lentils, carrot, celery, tomato, spinach, onion","vegetarian, vegan, healthy, warm, budget",35,dinner
+Tuna Avocado Salad,Australian,"tuna, avocado, lettuce, cucumber, tomato, lemon","low carb, high protein, quick, fresh",12,lunch
+Egg Fried Rice,Chinese,"egg, rice, peas, carrot, soy sauce, spring onion","quick, budget, comfort, dinner",18,dinner
+Chickpea Curry,Indian,"chickpeas, tomato, coconut milk, spinach, curry powder, rice","vegetarian, vegan, spicy, high fibre",30,dinner
+Greek Yogurt Breakfast Bowl,Greek,"greek yogurt, berries, banana, oats, honey, almonds","breakfast, healthy, sweet, high protein",8,breakfast
+Salmon Quinoa Plate,Modern Australian,"salmon, quinoa, asparagus, lemon, olive oil","omega 3, high protein, healthy, dinner",28,dinner
+Tomato Basil Pasta,Italian,"pasta, tomato, basil, garlic, olive oil, parmesan","vegetarian, comfort, quick, dinner",22,dinner
+Beef Taco Bowl,Mexican,"beef mince, rice, beans, corn, salsa, lettuce","high protein, spicy, dinner, meal prep",30,dinner
+Tofu Stir Fry,Asian,"tofu, noodles, capsicum, broccoli, ginger, soy sauce","vegetarian, vegan, quick, high protein",20,dinner
+Prawn Rice Noodle Salad,Thai,"prawns, rice noodles, cucumber, carrot, mint, lime","fresh, light, seafood, lunch",20,lunch
+Peanut Butter Banana Smoothie,American,"banana, peanut butter, milk, oats, chia seeds","breakfast, sweet, quick, energy",5,breakfast

@@ -129,8 +129,23 @@ smart-meal-recommendation-bot/
 ├── .gitignore
 ├── README.md
 │
+├── components/
+│   ├── input_section.py
+│   ├── results.py
+│   └── sidebar.py
+│
+├── config/
+│   └── settings.py
+│
 ├── data/
 │   └── recipes.csv
+│
+├── services/
+│   ├── azure_speech.py
+│   ├── azure_vision.py
+│   ├── data_loader.py
+│   ├── recommender.py
+│   └── text_processing.py
 │
 └── docs/
     ├── architecture_flowchart_mermaid.md
