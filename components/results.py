@@ -35,11 +35,14 @@ def render_recommendations(
             st.image(uploaded_image, use_container_width=True)
             if image_analysis:
                 caption = image_analysis.get("caption")
+                ingredients = image_analysis.get("ingredients", [])
                 keywords = image_analysis.get("keywords", [])
+                if ingredients:
+                    st.write(f"**Specific ingredients detected:** {', '.join(ingredients)}")
                 if caption:
                     st.write(f"**Azure caption:** {caption}")
-                if keywords:
-                    st.write(f"**Azure keywords:** {', '.join(keywords)}")
+                with st.expander("Raw Azure Vision keywords"):
+                    st.write(", ".join(keywords) or "No raw keywords returned.")
 
     if recommendations.empty:
         st.warning(

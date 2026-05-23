@@ -62,7 +62,7 @@ Azure AI Vision is used to process uploaded food or ingredient images. It extrac
 - detected objects
 - OCR text, where available
 
-This allows the bot to understand the visual content of an uploaded image and use it as part of the recommendation process.
+The app then filters the raw Vision output against the local recipe ingredient list. This keeps the recommendation input focused on specific ingredients such as chicken, beef, rice, salmon, tomato, tofu, or avocado instead of broad labels such as food, meal, or dish.
 
 ### 2. Azure Speech to Text
 
@@ -77,11 +77,12 @@ The recommendation engine follows these steps:
 1. Collect user text input.
 2. Analyse the uploaded image using Azure AI Vision.
 3. Transcribe the recorded voice input using Azure Speech to Text.
-4. Combine all extracted text into one search profile.
-5. Clean and tokenize the combined text.
-6. Compare the extracted keywords with each recipe's name, ingredients, cuisine, and tags.
-7. Calculate a recommendation score for each recipe.
-8. Return the top-ranked recipes with matched keywords and explanation.
+4. Convert raw image caption, tags, objects, and OCR into specific recipe ingredients where possible.
+5. Combine all extracted text into one search profile.
+6. Clean and tokenize the combined text.
+7. Compare the extracted keywords with each recipe's name, ingredients, cuisine, and tags.
+8. Calculate a recommendation score for each recipe.
+9. Return the top-ranked recipes with matched keywords and explanation.
 
 The scoring is based on keyword overlap plus main-protein relevance. Recipes that match more important user terms receive a higher score. If the input clearly mentions or detects a main protein such as beef, pork, chicken, fish, seafood, tofu, egg, or turkey, recipes with incompatible proteins are filtered out so the recommendation stays relevant to the uploaded image or typed request.
 

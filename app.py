@@ -11,6 +11,7 @@ from config.settings import get_config_status
 from services.azure_speech import transcribe_audio
 from services.azure_vision import analyse_image
 from services.data_loader import load_recipes
+from services.ingredient_detector import enrich_image_analysis_with_ingredients
 from services.recommender import recommend_recipes
 
 
@@ -23,11 +24,16 @@ def build_input_profile(typed_text: str, image_analysis: dict, voice_text: str) 
         profile_parts.append(typed_text)
         active_sources.append("Text")
 
-    image_parts = [
-        image_analysis.get("caption", ""),
-        " ".join(image_analysis.get("keywords", [])),
-        image_analysis.get("ocr_text", ""),
-    ]
+    image_ingredients = image_analysis.get("ingredients", [])
+    if image_ingredients:
+        image_parts = [
+            " ".join(image_ingredients),
+            image_analysis.get("ocr_text", ""),
+        ]
+    else:
+        image_parts = [
+            image_analysis.get("ocr_text", ""),
+        ]
     image_text = " ".join(part for part in image_parts if part).strip()
     if image_text:
         profile_parts.append(image_text)
@@ -73,12 +79,19 @@ def main() -> None:
         if uploaded_image:
             with st.spinner("Analysing image with Azure AI Vision..."):
                 image_analysis = analyse_image(uploaded_image.getvalue())
+                image_analysis = enrich_image_analysis_with_ingredients(image_analysis, recipes)
             if image_analysis.get("error"):
                 st.warning(image_analysis["error"])
-            st.write("**Image caption**")
-            st.info(image_analysis.get("caption") or "No caption detected.")
-            st.write("**Visual keywords**")
-            st.write(", ".join(image_analysis.get("keywords", [])) or "No visual keywords found.")
+            st.write("**Specific ingredients detected**")
+            st.success(
+                ", ".join(image_analysis.get("ingredients", []))
+                or "No specific recipe ingredient detected from the image."
+            )
+            with st.expander("Raw Azure Vision output"):
+                st.write("**Image caption**")
+                st.info(image_analysis.get("caption") or "No caption detected.")
+                st.write("**Visual keywords**")
+                st.write(", ".join(image_analysis.get("keywords", [])) or "No visual keywords found.")
             if image_analysis.get("ocr_text"):
                 st.write("**OCR text**")
                 st.write(image_analysis["ocr_text"])

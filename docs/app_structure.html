@@ -206,7 +206,8 @@
         The app is a Streamlit meal recommendation bot for SIT788 Option 2. It accepts typed
         preferences, an uploaded food or ingredient image, a short voice preference, or any
         combination of those inputs. It uses
-        Azure AI Vision for image understanding, Azure Speech to Text for voice transcription,
+        Azure AI Vision for image understanding, ingredient filtering for specific food terms,
+        Azure Speech to Text for voice transcription,
         and a local CSV recipe dataset for recommendation scoring.
       </p>
       <span class="tag">Text input</span>
@@ -258,7 +259,7 @@
       </div>
       <div class="step">
         <strong>4. Search Profile</strong>
-        Combine whichever sources exist: typed text, image caption, visual keywords, OCR text, and voice transcript.
+        Combine whichever sources exist: typed text, specific image ingredients, OCR text, and voice transcript.
       </div>
       <div class="step">
         <strong>5. Recommender</strong>
@@ -356,6 +357,11 @@
           <td>Calls Azure AI Vision to extract image caption, tags, detected objects, and OCR text from the uploaded image.</td>
         </tr>
         <tr>
+          <td><code>services/ingredient_detector.py</code></td>
+          <td><code>detect_image_ingredients</code>, <code>enrich_image_analysis_with_ingredients</code></td>
+          <td>Filters raw Azure Vision output against the recipe ingredient vocabulary so image recommendations use specific ingredients instead of broad labels.</td>
+        </tr>
+        <tr>
           <td><code>services/azure_speech.py</code></td>
           <td><code>transcribe_audio</code></td>
           <td>Saves the recorded audio temporarily, sends it to Azure Speech to Text, and returns the transcript.</td>
@@ -449,7 +455,8 @@
       <li>The user can also use only one of those inputs, such as image only or speech only.</li>
       <li><code>app.py</code> sends the image bytes to <code>analyse_image</code>.</li>
       <li><code>app.py</code> sends the audio bytes to <code>transcribe_audio</code>.</li>
-      <li>The app combines the available typed text, image caption, image keywords, OCR text, and voice transcript.</li>
+      <li>The app filters raw image caption, tags, and objects into specific recipe ingredients.</li>
+      <li>The app combines the available typed text, specific image ingredients, OCR text, and voice transcript.</li>
       <li><code>recommend_recipes</code> tokenizes that combined text and detects the requested main protein.</li>
       <li>Recipes with incompatible proteins are filtered when a clear protein is detected.</li>
       <li>The highest scoring recipes are displayed with the uploaded image and matched terms so the result is explainable.</li>
