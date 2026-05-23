@@ -2,13 +2,13 @@
 
 A multimodal recommendation bot built for **SIT788 Engineering AI Solutions - Task 11.2HD Option 2**.
 
-The bot recommends meals from a local recipe dataset by combining three types of user input:
+The bot recommends meals from a local recipe dataset using one or more input types:
 
 - **Text input**: typed food preference or dietary requirement
 - **Image input**: uploaded ingredient or food image analysed using Azure AI Vision
 - **Voice input**: spoken preference transcribed using Azure Speech to Text
 
-The system combines the extracted information, matches it against a recipe dataset, scores each recipe, and returns the most relevant meal recommendations.
+The user can provide text only, image only, voice only, or any combination of these inputs. The system combines whatever usable information is available, matches it against a recipe dataset, scores each recipe, and returns the most relevant meal recommendations.
 
 ---
 
@@ -28,6 +28,7 @@ Example use case:
 - Text-based meal preference input
 - Image upload and analysis using Azure AI Vision
 - Voice input transcription using Azure Speech to Text
+- Single-input or multi-input recommendation flow
 - Local recipe dataset stored as CSV
 - Keyword-based recommendation scoring
 - Ranked meal recommendations with matched terms
@@ -82,7 +83,7 @@ The recommendation engine follows these steps:
 7. Calculate a recommendation score for each recipe.
 8. Return the top-ranked recipes with matched keywords and explanation.
 
-The scoring is based on keyword overlap. Recipes that match more important user terms receive a higher score.
+The scoring is based on keyword overlap plus main-protein relevance. Recipes that match more important user terms receive a higher score. If the input clearly mentions or detects a main protein such as beef, pork, chicken, fish, seafood, tofu, egg, or turkey, recipes with incompatible proteins are filtered out so the recommendation stays relevant to the uploaded image or typed request.
 
 ---
 
