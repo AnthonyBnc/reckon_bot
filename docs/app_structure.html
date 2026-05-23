@@ -204,7 +204,8 @@
       <h2>Project Purpose</h2>
       <p>
         The app is a Streamlit meal recommendation bot for SIT788 Option 2. It accepts typed
-        preferences, an uploaded food or ingredient image, and a short voice preference. It uses
+        preferences, an uploaded food or ingredient image, a short voice preference, or any
+        combination of those inputs. It uses
         Azure AI Vision for image understanding, Azure Speech to Text for voice transcription,
         and a local CSV recipe dataset for recommendation scoring.
       </p>
@@ -257,11 +258,11 @@
       </div>
       <div class="step">
         <strong>4. Search Profile</strong>
-        Combine typed text, image caption, visual keywords, OCR text, and voice transcript.
+        Combine whichever sources exist: typed text, image caption, visual keywords, OCR text, and voice transcript.
       </div>
       <div class="step">
         <strong>5. Recommender</strong>
-        Tokenize the search profile, score recipes, and show ranked meal matches.
+        Tokenize the search profile, match the main protein, score recipes, and show ranked meals.
       </div>
     </div>
 
@@ -277,8 +278,8 @@
       <tbody>
         <tr>
           <td><code>app.py</code></td>
-          <td>Main Streamlit controller. It connects UI components, Azure service calls, recipe loading, and recommendation output.</td>
-          <td>Edit when changing the overall page flow, layout columns, or how inputs are combined.</td>
+          <td>Main Streamlit controller. It connects UI components, Azure service calls, recipe loading, input profile building, and recommendation output.</td>
+          <td>Edit when changing the overall page flow, layout columns, or how single/multiple inputs are combined.</td>
         </tr>
         <tr>
           <td><code>requirements.txt</code></td>
@@ -316,7 +317,7 @@
         <tr>
           <td><code>components/results.py</code></td>
           <td><code>render_combined_text</code>, <code>render_recommendations</code></td>
-          <td>Shows the combined search profile and the ranked recipe recommendations with score, ingredients, tags, and matched terms.</td>
+          <td>Shows the uploaded image used for the result, the combined search profile, and ranked recipe recommendations with score, ingredients, tags, protein match, and matched terms.</td>
         </tr>
       </tbody>
     </table>
@@ -386,11 +387,20 @@
       <p>
         The recommender uses these fields for scoring. For example, a user search profile containing
         <code>quick high protein chicken rice dinner</code> strongly matches recipes that include those
-        words in ingredients and tags.
+        words in ingredients and tags. If the input contains a clear protein such as beef, pork,
+        chicken, fish, seafood, tofu, egg, or turkey, the recommender keeps recipes aligned with that
+        protein and filters incompatible meals.
       </p>
     </div>
 
     <h2>Recommendation Scoring</h2>
+    <div class="panel">
+      <p>
+        The recommender first checks for a main protein. This prevents a beef image or beef text
+        request from returning unrelated fish or sushi recipes. Compatible fish and seafood terms
+        can still match each other, but exact protein matches receive the strongest bonus.
+      </p>
+    </div>
     <table>
       <thead>
         <tr>
@@ -400,6 +410,11 @@
         </tr>
       </thead>
       <tbody>
+        <tr>
+          <td><code>main protein</code></td>
+          <td>10 bonus</td>
+          <td>Exact protein matches such as beef, pork, chicken, fish, seafood, tofu, egg, or turkey are strongly preferred.</td>
+        </tr>
         <tr>
           <td><code>name</code></td>
           <td>4</td>
@@ -431,11 +446,13 @@
     <h2>Data Flow In Plain English</h2>
     <ol>
       <li>The user types a preference, uploads an image, and records or uploads audio.</li>
+      <li>The user can also use only one of those inputs, such as image only or speech only.</li>
       <li><code>app.py</code> sends the image bytes to <code>analyse_image</code>.</li>
       <li><code>app.py</code> sends the audio bytes to <code>transcribe_audio</code>.</li>
-      <li>The app combines typed text, image caption, image keywords, OCR text, and voice transcript.</li>
-      <li><code>recommend_recipes</code> tokenizes that combined text and compares it with each recipe.</li>
-      <li>The highest scoring recipes are displayed with matched terms so the result is explainable.</li>
+      <li>The app combines the available typed text, image caption, image keywords, OCR text, and voice transcript.</li>
+      <li><code>recommend_recipes</code> tokenizes that combined text and detects the requested main protein.</li>
+      <li>Recipes with incompatible proteins are filtered when a clear protein is detected.</li>
+      <li>The highest scoring recipes are displayed with the uploaded image and matched terms so the result is explainable.</li>
     </ol>
 
     <h2>Where To Change Things</h2>
@@ -473,6 +490,6 @@
         <code>pip install -r requirements.txt</code>, then run <code>streamlit run app.py</code>.
       </p>
     </div>
-  </main>
+</main>
 </body>
 </html>

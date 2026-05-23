@@ -14,6 +14,33 @@ from services.data_loader import load_recipes
 from services.recommender import recommend_recipes
 
 
+def build_input_profile(typed_text: str, image_analysis: dict, voice_text: str) -> tuple[str, list[str]]:
+    profile_parts = []
+    active_sources = []
+
+    typed_text = typed_text.strip()
+    if typed_text:
+        profile_parts.append(typed_text)
+        active_sources.append("Text")
+
+    image_parts = [
+        image_analysis.get("caption", ""),
+        " ".join(image_analysis.get("keywords", [])),
+        image_analysis.get("ocr_text", ""),
+    ]
+    image_text = " ".join(part for part in image_parts if part).strip()
+    if image_text:
+        profile_parts.append(image_text)
+        active_sources.append("Image")
+
+    voice_text = voice_text.strip()
+    if voice_text:
+        profile_parts.append(voice_text)
+        active_sources.append("Speech")
+
+    return " ".join(profile_parts).strip(), active_sources
+
+
 def main() -> None:
     st.set_page_config(
         page_title="Smart Meal Recommendation Bot",
@@ -65,20 +92,22 @@ def main() -> None:
         if not uploaded_image and not recorded_audio:
             st.info("Upload an image or record a voice preference to see Azure extraction output.")
 
-    combined_parts = [
-        typed_text,
-        image_analysis.get("caption", ""),
-        " ".join(image_analysis.get("keywords", [])),
-        image_analysis.get("ocr_text", ""),
-        voice_text,
-    ]
-    combined_text = " ".join(part for part in combined_parts if part).strip()
+    combined_text, active_sources = build_input_profile(
+        typed_text=typed_text,
+        image_analysis=image_analysis,
+        voice_text=voice_text,
+    )
 
-    render_combined_text(combined_text)
+    render_combined_text(combined_text, active_sources)
 
     if st.button("Recommend Meals", type="primary", use_container_width=True):
         recommendations = recommend_recipes(recipes, combined_text)
-        render_recommendations(recommendations)
+        render_recommendations(
+            recommendations,
+            uploaded_image=uploaded_image,
+            image_analysis=image_analysis,
+            active_sources=active_sources,
+        )
 
 
 if __name__ == "__main__":
