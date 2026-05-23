@@ -32,17 +32,20 @@ def render_recommendations(
     if uploaded_image:
         with st.container(border=True):
             st.markdown("### Uploaded image used for recommendation")
-            st.image(uploaded_image, use_container_width=True)
-            if image_analysis:
-                caption = image_analysis.get("caption")
-                ingredients = image_analysis.get("ingredients", [])
-                keywords = image_analysis.get("keywords", [])
-                if ingredients:
-                    st.write(f"**Specific ingredients detected:** {', '.join(ingredients)}")
-                if caption:
-                    st.write(f"**Azure caption:** {caption}")
-                with st.expander("Raw Azure Vision keywords"):
-                    st.write(", ".join(keywords) or "No raw keywords returned.")
+            image_col, details_col = st.columns([1, 2], vertical_alignment="top")
+            with image_col:
+                st.image(uploaded_image, width=240)
+            with details_col:
+                if image_analysis:
+                    caption = image_analysis.get("caption")
+                    ingredients = image_analysis.get("ingredients", [])
+                    keywords = image_analysis.get("keywords", [])
+                    if ingredients:
+                        st.write(f"**Specific ingredients detected:** {', '.join(ingredients)}")
+                    if caption:
+                        st.write(f"**Azure caption:** {caption}")
+                    with st.expander("Raw Azure Vision keywords"):
+                        st.write(", ".join(keywords) or "No raw keywords returned.")
 
     if recommendations.empty:
         st.warning(
